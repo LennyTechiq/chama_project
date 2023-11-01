@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Chama | Sign In</title>
+	
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
+</head>
+<body>
+	
+	<div class="container col-xl-10 col-xxl-8 px-4 py-5">
+	    <div class="row align-items-center g-lg-5 py-5">
+	      <div class="col-lg-7 text-center text-lg-start">
+	        <h1 class="display-4 fw-bold lh-1 mb-3">Welcome to ChamaConnect!</h1>
+	        <p class="col-lg-10 fs-4">"Joining our vibrant chama community is quick and easy. By signing up, you'll gain access to a world of financial opportunities and collaborative saving. Whether you're a seasoned investor or just starting your financial journey, ChamaConnect is the perfect platform for you. Simply fill in your details below to get started. We value your privacy and security, so rest assured that your information is in safe hands. Let's embark on this financial adventure together and watch your savings grow!"</p>
+	      </div>
+	      <div class="col-md-10 mx-auto col-lg-5">
+			  <h1 style="text-align: center;">Sign Up</h1>
+	        <form class="p-4 p-md-5 border rounded-3 bg-light" role="form" th:action="@{/user/register/save}" th:object="${user}" method="post">
+			  <div class="form-floating mb-3">
+	            <input th:field="*{firstName}" type="text" class="form-control" id="floatingInput" placeholder="First Name" required>
+	            <p th:errors = "*{firstName}" class="text-danger"
+	              th:if="${#fields.hasErrors('firstName')}"></p>
+	            <!--<label for="floatingInput">First Name</label>-->
+	          </div>
+	      	  <div class="form-floating mb-3">
+	            <input th:field="*{lastName}" type="text" class="form-control" id="floatingInput" placeholder="Last Name" required>
+	            <p th:errors = "*{lastName}" class="text-danger"
+	              th:if="${#fields.hasErrors('lastName')}"></p>
+	          </div>
+	          <div class="form-floating mb-3">
+	            <input th:field="*{email}" type="email" class="form-control" id="floatingInput" placeholder="Email" required>
+	            <p th:errors = "*{email}" class="text-danger"
+	              th:if="${#fields.hasErrors('email')}"></p>
+	          </div>
+	          <div class="form-floating mb-3">
+	            <input th:field="*{password}" type="password" class="form-control" id="floatingPassword" placeholder="Password" required>
+	            <p th:errors = "*{password}" class="text-danger"
+	              th:if="${#fields.hasErrors('password')}"></p>
+	          </div>
+	          <div class="checkbox mb-3">
+	          </div>
+	          <button class="w-100 btn btn-lg btn-primary" type="submit">Sign up</button>
+	          <span>Already registered? <a th:href="@{/login}">Login here</a></span>
+	          <hr class="my-4">
+	          <small class="text-muted">By clicking Sign up, you agree to the terms of use.</small>
+	        </form>
+	      </div>
+	    </div>
+	  </div>
+	
+	<script th:src="@{/webjars/jquery/3.0.0/jquery.min.js}"></script>
+	<script th:src="@{/webjars/popper.js/1.12.9-1/umd/popper.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap/4.0.0-2/js/bootstrap.min.js}"></script>
+</body>
+</html>
