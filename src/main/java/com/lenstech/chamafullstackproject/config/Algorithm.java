@@ -1,11 +1,13 @@
 package com.lenstech.chamafullstackproject.config;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 import org.springframework.stereotype.Component;
 
 import com.lenstech.chamafullstackproject.model.Accounts;
+import com.lenstech.chamafullstackproject.model.M_Group;
 import com.lenstech.chamafullstackproject.model.State;
 import com.lenstech.chamafullstackproject.model.User;
 import com.lenstech.chamafullstackproject.repository.AccountsRepository;
@@ -22,13 +24,41 @@ public class Algorithm {
 		this.accountsRepository = accountsRepository;
 	}
 	
-	public User randomUser() {
+	public User cycle2Randomizer() {
 		List<User> members = userRepository.findByState(State.Not_Cycled);
+		List<User> toCycle1List = new ArrayList<>();
+		
+		for(User member : members) {
+			if(member.getGroup().equals(M_Group.Group_2)) {
+				toCycle1List.add(member);
+			}
+		}
+		
 		Random rand = new Random();
 		User user = null;
 
-		if(!members.isEmpty()) {
-			user = members.get(rand.nextInt(members.size()));
+		if(!toCycle1List.isEmpty()) {
+			user = toCycle1List.get(rand.nextInt(toCycle1List.size()));
+		}
+		
+		return user;
+	}
+	
+	public User cycle1Randomizer() {
+		List<User> members = userRepository.findByState(State.Not_Cycled);
+		List<User> toCycle1List = new ArrayList<>();
+		
+		for(User member : members) {
+			if(member.getGroup().equals(M_Group.Group_1)) {
+				toCycle1List.add(member);
+			}
+		}
+		
+		Random rand = new Random();
+		User user = null;
+
+		if(!toCycle1List.isEmpty()) {
+			user = toCycle1List.get(rand.nextInt(toCycle1List.size()));
 		}
 		
 		return user;

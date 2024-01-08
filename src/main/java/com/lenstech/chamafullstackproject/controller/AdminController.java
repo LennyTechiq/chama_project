@@ -51,10 +51,24 @@ public class AdminController {
 	}
 	
 	@GetMapping("/members")
-	public String getMembersPage(Model model) {
+	public String getMembers(Model model) {
 		List<UserDto> users = userService.findAllUsers();
 		model.addAttribute("users", users);
 		return "admin/members";
+	}
+	
+	@GetMapping("/group-1")
+	public String getGroup1(Model model) {
+		List<UserDto> users = userService.findGroup1();
+		model.addAttribute("users", users);
+		return "admin/group-1-members";
+	}
+	
+	@GetMapping("/group-2")
+	public String getGroup2(Model model) {
+		List<UserDto> users = userService.findGroup2();
+		model.addAttribute("users", users);
+		return "admin/group-2-members";
 	}
 	
 	@GetMapping("/member/edit/{id}")
@@ -76,38 +90,70 @@ public class AdminController {
 		return "redirect:/admin/members";
 	}
 	
-	@GetMapping("/member/add-to-cycle")
-	public String getAddToCycle(Model model) {
-		User user = algorithm.randomUser();
+	@GetMapping("/member/add-to-cycle2")
+	public String getAddToCycle2(Model model) {
+		User user = algorithm.cycle2Randomizer();
 		model.addAttribute("user", user);
-		return "admin/add-to-cycle";
+		return "admin/add-to-cycle2";
 	}
 	
-	@PostMapping("/member/add-to-cycle")
-	public String addToCycle(@ModelAttribute User user, Model model) {
+	@PostMapping("/member/add-to-cycle2")
+	public String addToCycle2(@ModelAttribute User user, Model model) {
 		userService.changeUserState(user);
-		String message = user.getUsername() + " has been added to cycle.";
-		model.addAttribute("message", message);
-		return "redirect:/admin/members";
+		model.addAttribute("message");
+		return "redirect:/admin/group-2";
 	}
 	
-	@GetMapping("/cycle")
-	public String getcyclePage(Model model) {
-		List<AlgorithmCycle> cycleData =  algorithmCycleService.findAllUsers();
+	@GetMapping("/member/add-to-cycle1")
+	public String getAddToCycle1(Model model) {
+		User user = algorithm.cycle1Randomizer();
+		model.addAttribute("user", user);
+		return "admin/add-to-cycle1";
+	}
+	
+	@PostMapping("/member/add-to-cycle1")
+	public String addToCycle1(@ModelAttribute User user, Model model) {
+		userService.changeUserState(user);
+		model.addAttribute("message");
+		return "redirect:/admin/group-1";
+	}
+	
+	@GetMapping("/group-1-cycle")
+	public String getcycle1Page(Model model) {
+		List<AlgorithmCycle> cycleData =  algorithmCycleService.findGroup1Members();
 		model.addAttribute("cycle_members", cycleData);
-		return "admin/cycle";
+		return "admin/group-1-cycle";
 	}
 	
-	@RequestMapping("/cycle/remove/{id}")
-	public String removeFromCycle(@PathVariable("id") Long id) {
+	@GetMapping("/group-2-cycle")
+	public String getcycle2Page(Model model) {
+		List<AlgorithmCycle> cycleData =  algorithmCycleService.findGroup2Members();
+		model.addAttribute("cycle_members", cycleData);
+		return "admin/group-2-cycle";
+	}
+	
+	@RequestMapping("/group-1-cycle/remove/{id}")
+	public String removeFromGroup1Cycle(@PathVariable("id") Long id) {
 		algorithmCycleService.removeMember(id);
-		return "redirect:/admin/cycle";
+		return "redirect:/admin/group-1-cycle";
 	}
 	
-	@RequestMapping("/cycle/pay/{id}")
-	public String payMember(@PathVariable("id") Long id) {
+	@RequestMapping("/group-2-cycle/remove/{id}")
+	public String removeFromGroup2Cycle(@PathVariable("id") Long id) {
+		algorithmCycleService.removeMember(id);
+		return "redirect:/admin/group-2-cycle";
+	}
+	
+	@RequestMapping("/group-1-cycle/pay/{id}")
+	public String payGroup1Member(@PathVariable("id") Long id) {
 		algorithmCycleService.pay(id);
-		return "redirect:/admin/cycle";
+		return "redirect:/admin/group-1-cycle";
+	}
+	
+	@RequestMapping("/group-2-cycle/pay/{id}")
+	public String payGroup2Member(@PathVariable("id") Long id) {
+		algorithmCycleService.pay(id);
+		return "redirect:/admin/group-2-cycle";
 	}
 	
 	@RequestMapping("/members/credit")

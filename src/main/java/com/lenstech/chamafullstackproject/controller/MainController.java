@@ -1,17 +1,14 @@
 package com.lenstech.chamafullstackproject.controller;
 
-import java.io.UnsupportedEncodingException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-
-import jakarta.mail.MessagingException;
-import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class MainController {
@@ -37,26 +34,16 @@ public class MainController {
         return "user/login";
     }
     
-	@PostMapping("/contact")
-	public String submitContact(HttpServletRequest request) throws MessagingException, UnsupportedEncodingException {
-		SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
-		
-		String name = request.getParameter("name");
-		String email = request.getParameter("email");
-		String content = request.getParameter("message");
-		
-		String mailSubject = name + " has sent a message";
-		String mailContent = "<p><b>Sender Name:</b> " + name + "</p>";
-		mailContent += "<p><b>Sender E-mail:</b> " + email + "</p>";
-		mailContent += "<p><b>Content:</b> " + content + "</p>";
-		
-		simpleMailMessage.setFrom(fromEmail);
-		simpleMailMessage.setSubject(mailSubject);
-		simpleMailMessage.setText(mailContent);
-		simpleMailMessage.setTo("leonardrongoma3@gmail.com");
-		
-		mailSender.send(simpleMailMessage);
-		
-		return "message";
-	}
+    @RequestMapping(value = "/sendEmail", method = RequestMethod.GET)
+    @ResponseBody
+    public String sendEmail() {
+        SimpleMailMessage mailMessage = new SimpleMailMessage();
+        mailMessage.setTo("leonardrongoma3@gmail.com");
+        mailMessage.setSubject("Hello, Spring Boot Email");
+        mailMessage.setText("This is a test email sent from Spring Boot.");
+
+        mailSender.send(mailMessage);
+
+        return "Email sent successfully!";
+    }
 }

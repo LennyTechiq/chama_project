@@ -1,5 +1,6 @@
 package com.lenstech.chamafullstackproject.dto;
 
+import com.lenstech.chamafullstackproject.model.M_Group;
 import com.lenstech.chamafullstackproject.model.State;
 
 import jakarta.validation.constraints.Email;
@@ -19,6 +20,7 @@ public class UserDto
     private String firstName;
     private String lastName;
     private State state;
+    private M_Group group;
     @NotEmpty(message = "Email should not be empty")
     @Email
     private String email;
@@ -47,6 +49,12 @@ public class UserDto
 	}
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	public M_Group getGroup() {
+		return group;
+	}
+	public void setGroup(M_Group group) {
+		this.group = group;
 	}
 	public State getState() {
 		return state;

@@ -97,10 +97,10 @@
                 <a class="nav-link" th:href="@{/admin/dashboard}"></i> Dashboard</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link active" th:href="@{/admin/members}"></i> Members</a>
+                <a class="nav-link" th:href="@{/admin/members}"></i> Members</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/admin/group-1}"></i> Group 1</a>
+                <a class="nav-link active" th:href="@{/admin/group-1}"></i> Group 1</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" th:href="@{/admin/group-2}"></i> Group 2</a>
@@ -114,15 +114,19 @@
 
 <!-- Main Content -->
 <div class="container mt-4">
-    <h1>All Members</h1>
+    <h1>Group 1</h1>
+    <br>
+    <a th:href="@{/admin/member/add-to-cycle1}"><button class="btn btn-success">Add to Cycle</button></a>
+    <a th:href="@{/admin/group-1-cycle}"><button class="btn btn-primary">View Cycle</button></a>
+    <br>
     <br>
     <table class="table table-striped">
         <thead>
             <tr>
 				<th>Id</th>
+                <th>Username</th>
                 <th>Email</th>
-                <th>Group</th>
-                <th>Action</th>
+                <th>State</th>
             </tr>
         </thead>
         <tbody>
@@ -131,11 +135,9 @@
 			</tr>
             <tr th:each="user : ${users}">
 				<td th:text="${user.id}">1</td>
+                <td th:text="${user.firstName} + '	' + ${user.lastName}">John Doe</td>
                 <td th:text="${user.email}">johndoe@example.com</td>
-                <td th:text="${user.group}">Group 1</td>
-                <td>
-					<a th:href="@{../../{id}(id=${user.id})}"><button class="btn btn-primary">Set Group</button></a>
-                </td>
+                <td th:text="${user.state}">Added to Cycle</td>
             </tr>
         </tbody>
     </table>

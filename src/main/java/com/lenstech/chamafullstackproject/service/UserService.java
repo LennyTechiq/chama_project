@@ -14,6 +14,10 @@ public interface UserService {
 
     List<UserDto> findAllUsers();
     
+    List<UserDto> findGroup1();
+    
+    List<UserDto> findGroup2();
+    
     void delete(Long id);
 
 	User updateUser(User user);

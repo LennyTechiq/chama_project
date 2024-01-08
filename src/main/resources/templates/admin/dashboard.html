@@ -102,11 +102,14 @@
                 <a class="nav-link active" th:href="@{/admin/dashboard}"></i> Dashboard</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/admin/members}"></i> Members</a>
+                <a class="nav-link" th:href="@{/admin/group-1}"></i> Group 1</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/admin/cycle}"></i> Cycle</a>
+                <a class="nav-link" th:href="@{/admin/group-2}"></i> Group 2</a>
             </li>
+            <!--<li class="nav-item">
+                <a class="nav-link" th:href="@{/admin/cycle}"></i> Cycle</a>
+            </li>-->
             <li class="nav-item">
                 <a class="nav-link" th:href="@{/user/profile}"><i class="fas fa-user icon"></i></a>
             </li>
@@ -116,7 +119,7 @@
 
 <!-- Main Content -->
 <div class="container mt-4">
-	<h1>Chama with Pareto Dashboard</h1>
+	<h1>Chama Dashboard</h1>
     <p>If you are seeing this page, probably you are an admin. And if not, then you are at the wrong place.</p>
     
     <!-- Dashboard Section -->
@@ -125,7 +128,7 @@
             <div class="col-md-6 mb-3">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title"><i class="fas fa-money-bill-wave icon"></i> Total Account Balance</h5>
+                        <h5 class="card-title"><i class="fas fa-money-bill-wave icon"></i>Group 1 Collected Balance</h5>
                         <div class="data">Kshs.
 							<p class="card-text" th:text="${balance}">Kshs. 0</p>
                         </div>
@@ -137,8 +140,12 @@
             <div class="col-md-6 mb-3">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title"><i class="fas fa-coins icon"></i> Total Loans Amount</h5>
-                        <p class="card-text">Kshs. 0</p>
+                        <h5 class="card-title"><i class="fas fa-money-bill-wave icon"></i>Group 2 Collected Balance</h5>
+                        <div class="data">Kshs.
+							<p class="card-text" th:text="${balance}">Kshs. 0</p>
+                        </div>
+                        <br>
+                        <a th:href="@{/admin/members/credit}"><button data-toggle="modal" data-target="#myModal" class="btn btn-warning">Credit Members</button></a>
                     </div>
                 </div>
             </div>
@@ -154,7 +161,7 @@
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title"><i class="fas fa-users icon"></i> Member List</h5>
+                        <h5 class="card-title"><i class="fas fa-users icon"></i> Members List</h5>
                         <p th:if="${users.empty}">No members available</p>
                         <ul th:each="user : ${users}">
                             <li th:text="${user.firstName} + '	' + ${user.lastName}">Member 1: John Doe</li>

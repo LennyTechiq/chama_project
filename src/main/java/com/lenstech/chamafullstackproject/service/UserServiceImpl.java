@@ -4,12 +4,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.lenstech.chamafullstackproject.dto.UserDto;
+import com.lenstech.chamafullstackproject.model.M_Group;
 import com.lenstech.chamafullstackproject.model.Role;
 import com.lenstech.chamafullstackproject.model.State;
 import com.lenstech.chamafullstackproject.model.User;
 import com.lenstech.chamafullstackproject.repository.RoleRepository;
 import com.lenstech.chamafullstackproject.repository.UserRepository;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -40,6 +42,7 @@ public class UserServiceImpl implements UserService {
         user.setEmail(userDto.getEmail());
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
         user.setState(State.Not_Cycled);
+        user.setGroup(M_Group.NA);
         user.setSub_amount(300);
 
         Role role = roleRepository.findByName("USER");
@@ -71,6 +74,7 @@ public class UserServiceImpl implements UserService {
         userDto.setId(user.getId());
         userDto.setEmail(user.getEmail());
         userDto.setState(user.getState());
+        userDto.setGroup(user.getGroup());
         return userDto;
     }
 
@@ -124,5 +128,37 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<User> findByActive(boolean b) {
 		return userRepository.findByActive(false);
+	}
+
+	@Override
+	public List<UserDto> findGroup1() {
+		List<User> users = userRepository.findAll();
+		List<User> group_1_users = new ArrayList<>();
+		
+		for(User member : users) {
+			if(member.getGroup().equals(M_Group.Group_1)) {
+				group_1_users.add(member);
+			}
+		}
+		
+		return group_1_users.stream()
+                .map((user) -> mapToUserDto(user))
+                .collect(Collectors.toList());
+	}
+	
+	@Override
+	public List<UserDto> findGroup2() {
+		List<User> users = userRepository.findAll();
+		List<User> group_2_users = new ArrayList<>();
+		
+		for(User member : users) {
+			if(member.getGroup().equals(M_Group.Group_2)) {
+				group_2_users.add(member);
+			}
+		}
+		
+		return group_2_users.stream()
+                .map((user) -> mapToUserDto(user))
+                .collect(Collectors.toList());
 	}
 }

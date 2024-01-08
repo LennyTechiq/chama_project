@@ -24,12 +24,7 @@ public class User {
     private long sub_amount;
     private long given_amount;
     private boolean active;
-	public long getGiven_amount() {
-		return given_amount;
-	}
-	public void setGiven_amount(long given_amount) {
-		this.given_amount = given_amount;
-	}
+    private M_Group m_group;
 	private long balance;
     private State state;
     @ManyToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
@@ -86,6 +81,18 @@ public class User {
 	}
 	public void setState(State state) {
 		this.state = state;
+	}
+	public long getGiven_amount() {
+		return given_amount;
+	}
+	public void setGiven_amount(long given_amount) {
+		this.given_amount = given_amount;
+	}
+	public M_Group getGroup() {
+		return m_group;
+	}
+	public void setGroup(M_Group group) {
+		this.m_group = group;
 	}
     public boolean isActive() {
 		return active;

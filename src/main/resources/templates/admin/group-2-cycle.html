@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin | Members</title>
+    <title>Admin | Cycle</title>
     <!-- Link to Bootstrap CSS -->
     <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
     
@@ -97,13 +97,13 @@
                 <a class="nav-link" th:href="@{/admin/dashboard}"></i> Dashboard</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link active" th:href="@{/admin/members}"></i> Members</a>
+                <a class="nav-link" th:href="@{/admin/members}"></i> Members</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" th:href="@{/admin/group-1}"></i> Group 1</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/admin/group-2}"></i> Group 2</a>
+                <a class="nav-link active" th:href="@{/admin/group-2}"></i> Group 2</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" th:href="@{/user/profile}"><i class="fas fa-user icon"></i></a>
@@ -114,36 +114,41 @@
 
 <!-- Main Content -->
 <div class="container mt-4">
-    <h1>All Members</h1>
-    <br>
+    <h1>Group 2 Cycle</h1>
     <table class="table table-striped">
         <thead>
             <tr>
-				<th>Id</th>
-                <th>Email</th>
-                <th>Group</th>
+				<th>Cycle No.</th>
+                <th>Member Email</th>
+                <th>State</th>
                 <th>Action</th>
+                <!-- Add more table headers as needed -->
             </tr>
         </thead>
         <tbody>
-			<tr th:if="${users.empty}">
-				<td>No Members Available</td>
+			<tr th:if="${cycle_members.empty}">
+				<td>No Members Added To Cycle</td>
 			</tr>
-            <tr th:each="user : ${users}">
-				<td th:text="${user.id}">1</td>
-                <td th:text="${user.email}">johndoe@example.com</td>
-                <td th:text="${user.group}">Group 1</td>
+            <tr th:each="member : ${cycle_members}">
+				<td th:text="${member.id}">1</td>
+                <td th:text="${member.member}">johndoe@example.com</td>
+                <td th:text="${member.state}">Benefitted</td>
                 <td>
-					<a th:href="@{../../{id}(id=${user.id})}"><button class="btn btn-primary">Set Group</button></a>
+					<a th:href="@{/admin/group-2-cycle/pay/{id}(id=${member.id})}"><button class="btn btn-success">Pay</button></a>
+                	<a th:href="@{/admin/group-2-cycle/remove/{id}(id=${member.id})}"><button class="btn btn-danger">Remove</button></a>
                 </td>
             </tr>
         </tbody>
     </table>
 </div>
 
+<!-- Link to Bootstrap JS and jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 <script th:src="@{/webjars/jquery/3.0.0/jquery.min.js}"></script>
 <script th:src="@{/webjars/popper.js/1.12.9-1/umd/popper.min.js}"></script>
 <script th:src="@{/webjars/bootstrap/4.0.0-2/js/bootstrap.min.js}"></script>
-
 </body>
 </html>

@@ -1,5 +1,6 @@
 package com.lenstech.chamafullstackproject.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.lenstech.chamafullstackproject.model.Accounts;
 import com.lenstech.chamafullstackproject.model.AlgorithmCycle;
 import com.lenstech.chamafullstackproject.model.CycleState;
+import com.lenstech.chamafullstackproject.model.M_Group;
 import com.lenstech.chamafullstackproject.model.State;
 import com.lenstech.chamafullstackproject.model.User;
 import com.lenstech.chamafullstackproject.repository.AccountsRepository;
@@ -29,11 +31,36 @@ public class AlgorithmCycleService {
 		this.userRepository = userRepository;
 		this.accountsRepository = accountsRepository;
 	}
-
-	public List<AlgorithmCycle> findAllUsers() {
-        List<AlgorithmCycle> algorithmCycle = algorithmCycleRepository.findAll();
-        return algorithmCycle;
-    }
+	
+	public List<AlgorithmCycle> findGroup1Members() {
+		List<AlgorithmCycle> algorithmCycle = algorithmCycleRepository.findAll();
+		List<AlgorithmCycle> group1Members = new ArrayList<>();
+		
+		for(AlgorithmCycle member : algorithmCycle) {
+			User user = userRepository.findByEmail(member.getMember());
+			
+			if(user.getGroup().equals(M_Group.Group_1)) {
+				group1Members.add(member);
+			}
+		}
+		
+		return group1Members;
+	}
+	
+	public List<AlgorithmCycle> findGroup2Members() {
+		List<AlgorithmCycle> algorithmCycle = algorithmCycleRepository.findAll();
+		List<AlgorithmCycle> group2Members = new ArrayList<>();
+		
+		for(AlgorithmCycle member : algorithmCycle) {
+			User user = userRepository.findByEmail(member.getMember());
+			
+			if(user.getGroup().equals(M_Group.Group_2)) {
+				group2Members.add(member);
+			}
+		}
+		
+		return group2Members;
+	}
     
     public void addMember(User user) {
     	AlgorithmCycle cycleData = new AlgorithmCycle();
