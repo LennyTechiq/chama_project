@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <!-- Link to Bootstrap CSS -->
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
+    
+    <!-- Link to Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    
+    <style>
+        /* Background and text colors */
+        body {
+            background-color: #f4f4f4;
+        }
+
+        .navbar {
+            background-color: #343a40;
+        }
+
+        .navbar-dark .navbar-toggler-icon {
+            background-color: transparent;
+            color: #fff;
+        }
+
+        /* Main content styles */
+        .container {
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            border-radius: 5px;
+        }
+        
+        .data {
+			display: flex;
+			gap: 12px;
+		}
+
+        section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .card {
+            background-color: #fff;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-title {
+            color: #333;
+        }
+
+        /* Styling links in the navbar */
+        .navbar-nav .nav-link {
+            color: #fff;
+            margin-right: 20px;
+            font-weight: 500;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: #bbb;
+        }
+
+        /* Styling the active link */
+        .nav-item.active .nav-link {
+            background-color: #007bff;
+            border-radius: 3px;
+        }
+
+        .nav-item.active .nav-link:hover {
+            background-color: #0056b3;
+        }
+
+        /* Icon styles */
+        .icon {
+            font-size: 24px;
+            margin-right: 10px;
+        }
+        
+        .dashboard-img {
+            max-width: 100%; /* Allow images to shrink to fit the container */
+            max-height: 200px; /* Set a maximum height for the images */
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <a class="navbar-brand" th:href="@{/}">Pareto Chama</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link active" th:href="@{/admin/dashboard}"></i> Dashboard</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/admin/group-1}"></i> Group 1</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/admin/group-2}"></i> Group 2</a>
+            </li>
+            <!--<li class="nav-item">
+                <a class="nav-link" th:href="@{/admin/cycle}"></i> Cycle</a>
+            </li>-->
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/user/profile}"><i class="fas fa-user icon"></i></a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<!-- Main Content -->
+<div class="container mt-4">
+	<h1>Chama Dashboard</h1>
+    <p>If you are seeing this page, probably you are an admin. And if not, then you are at the wrong place.</p>
+    
+    <!-- Dashboard Section -->
+    <section id="dashboard-section">
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="fas fa-money-bill-wave icon"></i>Group 1 Collected Balance</h5>
+                        <div class="data">Kshs.
+							<p class="card-text" th:text="${group1Balance}">Kshs. 0</p>
+                        </div>
+                        <br>
+                        <a th:href="@{/admin/group1/credit}"><button data-toggle="modal" data-target="#myModal" class="btn btn-warning">Credit Members</button></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="fas fa-money-bill-wave icon"></i>Group 2 Collected Balance</h5>
+                        <div class="data">Kshs.
+							<p class="card-text" th:text="${group2Balance}">Kshs. 0</p>
+                        </div>
+                        <br>
+                        <a th:href="@{/admin/group2/credit}"><button data-toggle="modal" data-target="#myModal" class="btn btn-warning">Credit Members</button></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 d-none">
+                <img src="https://media.istockphoto.com/id/1206158892/vector/financial-document-icon.jpg?s=612x612&w=0&k=20&c=Fif71z3JGGCUOSSTMOwq3V14a3L8-L6V4qO3VP22UgA=" alt="Dashboard Image" class="dashboard-img">
+            </div>
+        </div>
+    </section>
+
+    <!-- Members Section -->
+    <section id="members-section">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="fas fa-users icon"></i> Members List</h5>
+                        <p th:if="${users.empty}">No members available</p>
+                        <ul th:each="user : ${users}">
+                            <li th:text="${user.firstName} + '	' + ${user.lastName}">Member 1: John Doe</li>
+                        </ul>
+                        <a th:href="@{/admin/members}" class="btn btn-primary">View More Details</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 d-none d-md-block">
+                <img src="https://www.ilo.org/wcmsp5/groups/public/---africa/---ro-abidjan/---ilo-dar_es_salaam/documents/image/wcms_893698.jpg" alt="Members Image" class="dashboard-img">
+            </div>
+        </div>
+    </section>
+</div>
+
+<script th:src="@{/webjars/jquery/3.0.0/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/1.12.9-1/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/4.0.0-2/js/bootstrap.min.js}"></script>
+
+
+<!-- Link to Bootstrap JS and jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

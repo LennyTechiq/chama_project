@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Admin | Edit Member Details</title>
+	
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
+</head>
+<body>
+	
+	<div class="container col-xl-10 col-xxl-8 px-4 py-5">
+	    <div class="row align-items-center g-lg-5 py-5">
+	      <div class="col-md-10 mx-auto col-lg-5">
+			  <h1 style="text-align: center;">Edit Member</h1>
+	        <form class="p-4 p-md-5 border rounded-3 bg-light" role="form" th:object="${member}" th:action="@{/admin/member/edit}" method="post">
+	          <div class="form-floating mb-3">
+	            <input name="email" type="email" class="form-control" id="email" th:field="*{email}" placeholder="name@example.com" required>
+	            <label for="floatingInput">Email address</label>
+	          </div>
+	          <div class="form-floating mb-3">
+	            <input name="state" type="text" class="form-control" id="state" th:field="*{state}" placeholder="State" required>
+	            <label for="state">State</label>
+	          </div>
+	          <!--<div class="checkbox mb-3">
+	            <label>
+	              <input type="checkbox" value="remember-me"> Remember me
+	            </label>
+	          </div>-->
+	          <a th:href="@{/admin/members}">
+				  <button type="button" class="btn btn-secondary">Close</button>
+			  </a>
+	          <button type="submit" class="btn btn-primary">Save</button>
+	        </form>
+	      </div>
+	    </div>
+	  </div>
+	
+	<script th:src="@{/webjars/jquery/3.0.0/jquery.min.js}"></script>
+	<script th:src="@{/webjars/popper.js/1.12.9-1/umd/popper.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap/4.0.0-2/js/bootstrap.min.js}"></script>
+</body>
+</html>

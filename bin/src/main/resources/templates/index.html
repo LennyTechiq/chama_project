@@ -1,0 +1,173 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Chama</title>
+	
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">    
+	
+    <style>
+		.navbar {
+			background-color: #e3f2fd;
+		}
+		
+		.nav-left {
+				display: flex;
+				flex-direction: row;
+		}
+		
+		.toggler-items {
+			flex-direction: column;
+		}
+		
+		section {
+			margin-top: 48px;
+		}
+	</style>
+</head>
+<body>
+	
+	<nav class="navbar navbar-expand-lg navbar-light  justify-content-between">
+		  <div class="nav-left">
+	  	      <div>
+				<a class="navbar-brand" href="#">CHAMA</a>
+			  </div>
+			  <div class="toggler-items">
+				  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+				    <span class="navbar-toggler-icon"></span>
+				  </button>
+				  <div class="collapse navbar-collapse" id="navbarNav">
+				    <ul class="navbar-nav">
+				      <li class="nav-item active">
+				        <a class="nav-link" th:href="@{/}">Home <span class="sr-only">(current)</span></a>
+				      </li>
+				      <li sec:authorize="isAuthenticated()" class="nav-item">
+				        <a class="nav-link" th:href="@{/user/profile}">Profile</a>
+				      </li>
+				      <li class="nav-item">
+				        <a class="nav-link" th:href="@{/about}">About Us</a>
+				      </li>
+				      <li class="nav-item">
+				        <a class="nav-link" href="#contact">Contact Us</a>
+				      </li>
+				    </ul>
+				  </div>
+			  </div>
+		  </div>
+		  <form sec:authorize="!(isAuthenticated())" class="form-inline">
+		    <a th:href="@{/login}"><button class="btn btn-outline-success my-2 my-sm-0" type="button">Login</button></a>
+		  </form>
+		  <form sec:authorize="isAuthenticated()" class="form-inline">
+		    <a th:href="@{/logout}"><button class="btn btn-outline-danger my-2 my-sm-0" type="button">Logout</button></a>
+		  </form>
+		</nav>
+	
+	  <div class="container col-xxl-8 px-4 py-5">
+	    <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+	      <div class="col-10 col-sm-8 col-lg-6">
+	            <div id="imageCarousel" class="carousel slide" data-bs-ride="carousel">
+	                <div class="carousel-inner">
+	                    <!-- First Carousel Item (Active) -->
+	                    <div class="carousel-item active">
+	                        <img src="images/hero-image-1.jpg" class="d-block mx-lg-auto img-fluid" alt="Slide 1" width="700" height="500" loading="lazy">
+	                    </div>
+	                    <div class="carousel-item active">
+	                        <img src="images/hero-image-2.jpg" class="d-block mx-lg-auto img-fluid" alt="Slide 1" width="700" height="500" loading="lazy">
+	                    </div>
+	                    <div class="carousel-item active">
+	                        <img src="images/hero-image-3.jpg" class="d-block mx-lg-auto img-fluid" alt="Slide 1" width="700" height="500" loading="lazy">
+	                    </div>
+	                </div>
+	                <!-- Navigation Controls -->
+	                <a class="carousel-control-prev" href="#imageCarousel" role="button" data-bs-slide="prev">
+	                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+	                    <span class="visually-hidden">Previous</span>
+	                </a>
+	                <a class="carousel-control-next" href="#imageCarousel" role="button" data-bs-slide="next">
+	                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+	                    <span class="visually-hidden">Next</span>
+	                </a>
+	            </div>
+	        </div>
+	      <div class="col-lg-6">
+	        <h1 class="display-5 fw-bold lh-1 mb-3">Chama with Pareto Optimality</h1>
+	        <p class="lead">Let us join hands and help each other achieve their goals. We push you so that you can pull others to climb the mountain of financial stability and self development.</p>
+	        <div sec:authorize="!(isAuthenticated())" class="hero-btns">
+	          <a th:href="@{/user/register}"><button type="button" class="btn btn-primary btn-lg px-4 me-md-2">Sign Up</button></a>
+	          <!--<button type="button" class="btn btn-outline-secondary btn-lg px-4">Default</button>-->
+	        </div>
+	      </div>
+	    </div>
+	    
+	    <section id="contact" class="py-5">
+            <div class="row">
+                <div class="col-md-6">
+                    <h2>Contact Us</h2>
+                    <p>Have questions or need assistance? Contact us using the information below:</p>
+                    <ul>
+                        <li><i class="fas fa-envelope"></i> Email: info@paretochama.com</li>
+                        <li><i class="fas fa-phone"></i> Phone: +254 123 456 789</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Address: 123 Main Street, Nairobi, Kenya</li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <form th:action="@{/contact}" method="post">
+                        <div class="form-group">
+                            <label for="name">Your Name</label>
+                            <input type="text" class="form-control" id="name" name="name" placeholder="Enter your name">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email">
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea class="form-control" id="message" name="message""" rows="4" placeholder="Enter your message"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+	    
+	  </div>
+	  
+  	     <footer class="bg-dark text-white p-4 mt-5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4">
+                        <h5>Contact Us</h5>
+                        <p>Email: info@paretochama.com</p>
+                        <p>Phone: +254 123 456 789</p>
+                    </div>
+                    <div class="col-md-4">
+                        <h5>Follow Us</h5>
+                        <a href="#"><i class="fab fa-facebook"></i> Facebook</a><br>
+                        <a href="#"><i class="fab fa-twitter"></i> Twitter</a><br>
+                        <a href="#"><i class="fab fa-linkedin"></i> LinkedIn</a>
+                    </div>
+                    <div class="col-md-4">
+                        <h5>Address</h5>
+                        <p>123 Main Street</p>
+                        <p>Nairobi, Kenya</p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    
+    <!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap/dist/css/bootstrap.min.css">
+	
+	<!-- Bootstrap JavaScript and dependencies (Popper.js and jQuery) -->
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap/dist/js/bootstrap.min.js"></script>
+
+
+	<script th:src="@{/webjars/jquery/3.0.0/jquery.min.js}"></script>
+	<script th:src="@{/webjars/popper.js/1.12.9-1/umd/popper.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap/4.0.0-2/js/bootstrap.min.js}"></script>
+
+</body>
+</html>

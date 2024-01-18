@@ -1,0 +1,43 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Chama | Sign In</title>
+	
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
+</head>
+<body>
+	
+	<div class="container col-xl-10 col-xxl-8 px-4 py-5">
+	    <div class="row align-items-center g-lg-5 py-5">
+	      <div class="col-md-10 mx-auto col-lg-5">
+			  <h1 style="text-align: center;">Login</h1>
+			<div th:if="${param.error}">
+	            <div class="alert alert-danger">Invalid Email or Password</div>
+	        </div>
+	        <form class="p-4 p-md-5 border rounded-3 bg-light" role="form" th:action="@{/login}" method="post">
+	          <div class="form-floating mb-3">
+	            <input name="email" type="email" class="form-control" id="email" placeholder="name@example.com" required>
+	            <label for="floatingInput">Email address</label>
+	          </div>
+	          <div class="form-floating mb-3">
+	            <input name="password" type="password" class="form-control" id="password" placeholder="Password" required>
+	            <label for="floatingPassword">Password</label>
+	          </div>
+	          <!--<div class="checkbox mb-3">
+	            <label>
+	              <input type="checkbox" value="remember-me"> Remember me
+	            </label>
+	          </div>-->
+	          <button class="w-100 btn btn-lg btn-primary" type="submit">Login</button>
+	          <span>Not registered? <a th:href="@{/user/register}">Signup here</a></span>
+	        </form>
+	      </div>
+	    </div>
+	  </div>
+	
+	<script th:src="@{/webjars/jquery/3.0.0/jquery.min.js}"></script>
+	<script th:src="@{/webjars/popper.js/1.12.9-1/umd/popper.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap/4.0.0-2/js/bootstrap.min.js}"></script>
+</body>
+</html>

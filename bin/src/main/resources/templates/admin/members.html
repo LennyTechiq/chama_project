@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin | Members</title>
+    <!-- Link to Bootstrap CSS -->
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
+    
+    <!-- Link to Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    
+    <style>
+        /* Background and text colors */
+        body {
+            background-color: #f4f4f4;
+        }
+
+        .navbar {
+            background-color: #343a40;
+        }
+
+        .navbar-dark .navbar-toggler-icon {
+            background-color: transparent;
+            color: #fff;
+        }
+
+        /* Main content styles */
+        .container {
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            border-radius: 5px;
+        }
+
+        section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .card {
+            background-color: #fff;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-title {
+            color: #333;
+        }
+
+        /* Styling links in the navbar */
+        .navbar-nav .nav-link {
+            color: #fff;
+            margin-right: 20px;
+            font-weight: 500;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: #bbb;
+        }
+
+        /* Styling the active link */
+        .nav-item.active .nav-link {
+            background-color: #007bff;
+            border-radius: 3px;
+        }
+
+        .nav-item.active .nav-link:hover {
+            background-color: #0056b3;
+        }
+
+        /* Icon styles */
+        .icon {
+            font-size: 24px;
+            margin-right: 10px;
+        }
+        
+        .dashboard-img {
+            max-width: 100%; /* Allow images to shrink to fit the container */
+            max-height: 200px; /* Set a maximum height for the images */
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <a class="navbar-brand" href="#">Pareto Chama</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/admin/dashboard}"></i> Dashboard</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" th:href="@{/admin/members}"></i> Members</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/admin/group-1}"></i> Group 1</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/admin/group-2}"></i> Group 2</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/user/profile}"><i class="fas fa-user icon"></i></a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<!-- Main Content -->
+<div class="container mt-4">
+    <h1>All Members</h1>
+    <br>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+				<th>Id</th>
+                <th>Email</th>
+                <th>Group</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+			<tr th:if="${users.empty}">
+				<td>No Members Available</td>
+			</tr>
+            <tr th:each="user : ${users}">
+				<td th:text="${user.id}">1</td>
+                <td th:text="${user.email}">johndoe@example.com</td>
+                <td th:text="${user.group}">Group 1</td>
+                <td>
+					<a th:href="@{../../{id}(id=${user.id})}"><button class="btn btn-primary">Set Group</button></a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<script th:src="@{/webjars/jquery/3.0.0/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/1.12.9-1/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/4.0.0-2/js/bootstrap.min.js}"></script>
+
+</body>
+</html>
