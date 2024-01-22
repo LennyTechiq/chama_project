@@ -1,10 +1,10 @@
 package com.lenstech.chamafullstackproject.dto;
 
-public class DepositForm {
+public class WithdrawForm {
 	
 	private Long phoneNumber;
-	private Long depositAmount;
-	
+	private Long withdrawalAmount;
+
 	public Long getPhoneNumber() {
 		return phoneNumber;
 	}
@@ -13,12 +13,12 @@ public class DepositForm {
 		this.phoneNumber = phoneNumber;
 	}
 
-	public Long getDepositAmount() {
-		return depositAmount;
+	public Long getWithdrawalAmount() {
+		return withdrawalAmount;
 	}
 
-	public void setDepositAmount(Long depositAmount) {
-		this.depositAmount = depositAmount;
+	public void setWithdrawalAmount(Long withdrawalAmount) {
+		this.withdrawalAmount = withdrawalAmount;
 	}
 
 }

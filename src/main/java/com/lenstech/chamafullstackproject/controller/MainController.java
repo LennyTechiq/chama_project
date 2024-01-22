@@ -34,7 +34,7 @@ public class MainController {
         return "user/login";
     }
     
-    @RequestMapping(value = "/sendEmail", method = RequestMethod.GET)
+    @RequestMapping(value = "/sendEmail", method = RequestMethod.POST)
     @ResponseBody
     public String sendEmail() {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
