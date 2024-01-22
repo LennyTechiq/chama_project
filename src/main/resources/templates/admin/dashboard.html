@@ -133,6 +133,7 @@
 							<p class="card-text" th:text="${group1Balance}">Kshs. 0</p>
                         </div>
                         <br>
+                        <p th:if="${msg}" class="text-danger">The credit operation failed. Please confirm if all members have sufficient balances.</p>
                         <a th:href="@{/admin/group1/credit}"><button data-toggle="modal" data-target="#myModal" class="btn btn-warning">Credit Members</button></a>
                     </div>
                 </div>
@@ -145,6 +146,7 @@
 							<p class="card-text" th:text="${group2Balance}">Kshs. 0</p>
                         </div>
                         <br>
+                        <p th:if="${message}" class="text-danger">The credit operation failed. Please confirm if all members have sufficient balances.</p>
                         <a th:href="@{/admin/group2/credit}"><button data-toggle="modal" data-target="#myModal" class="btn btn-warning">Credit Members</button></a>
                     </div>
                 </div>
@@ -162,7 +164,7 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title"><i class="fas fa-users icon"></i> Members List</h5>
-                        <p th:if="${users.empty}">No members available</p>
+                        <!--<p th:if="${users.empty}">No members available</p>-->
                         <ul th:each="user : ${users}">
                             <li th:text="${user.firstName} + '	' + ${user.lastName}">Member 1: John Doe</li>
                         </ul>

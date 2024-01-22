@@ -20,6 +20,8 @@ public class UserDto
     private String firstName;
     private String lastName;
     private State state;
+    private long balance;
+    private long sub_amount;
     private M_Group group;
     @NotEmpty(message = "Email should not be empty")
     @Email
@@ -61,6 +63,18 @@ public class UserDto
 	}
 	public void setState(State state) {
 		this.state = state;
+	}
+	public long getBalance() {
+		return balance;
+	}
+	public void setBalance(long balance) {
+		this.balance = balance;
+	}
+	public long getSub_amount() {
+		return sub_amount;
+	}
+	public void setSub_amount(long sub_amount) {
+		this.sub_amount = sub_amount;
 	}
 	public String getPassword() {
 		return password;

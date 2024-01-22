@@ -189,13 +189,38 @@ public class AdminController {
 	
 	@RequestMapping("/group1/credit")
 	public String creditGroup1(Model model) {
-		algorithm.creditGroup1();
-		return "redirect:/admin/dashboard";
+		String msg = algorithm.creditGroup1();
+		
+		List<UserDto> users = userService.findAllUsers();
+		
+		Accounts group1AccountBalance = accountsService.getAccounts("group1");
+		Accounts group2AccountBalance = accountsService.getAccounts("group2");
+		Long group1Balance = group1AccountBalance.getBalance();
+		Long group2Balance = group2AccountBalance.getBalance();
+		
+		model.addAttribute("users", users);
+		model.addAttribute("group1Balance", group1Balance);
+		model.addAttribute("group2Balance", group2Balance);
+		model.addAttribute("msg", msg);
+		return "admin/dashboard";
 	}
 	
 	@RequestMapping("/group2/credit")
 	public String creditGroup2(Model model) {
-		algorithm.creditGroup2();
-		return "redirect:/admin/dashboard";
+		String message = algorithm.creditGroup2();
+		
+		List<UserDto> users = userService.findAllUsers();
+		
+		Accounts group1AccountBalance = accountsService.getAccounts("group1");
+		Accounts group2AccountBalance = accountsService.getAccounts("group2");
+		Long group1Balance = group1AccountBalance.getBalance();
+		Long group2Balance = group2AccountBalance.getBalance();
+		
+		model.addAttribute("users", users);
+		model.addAttribute("group1Balance", group1Balance);
+		model.addAttribute("group2Balance", group2Balance);
+		model.addAttribute("message", message);
+		
+		return "admin/dashboard";
 	}
 }

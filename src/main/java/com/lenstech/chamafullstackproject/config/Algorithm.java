@@ -152,14 +152,14 @@ public class Algorithm {
 				} 
 			} 
 			
-			message = "Succeeded";
+			//message = "Succeeded";
 			
 		} else if(checkGroup1MembersBalance().equals("Fail")) {
 			
 			message = "Failed";
 		}
 		
-		System.out.println(message);
+		//System.out.println(message);
 		
 		return message;
 	}
@@ -194,14 +194,14 @@ public class Algorithm {
 				} 
 			} 
 			
-			message = "Succeeded";
+			//message = "Succeeded";
 			
 		} else if(checkGroup2MembersBalance().equals("Fail")) {
 			
 			message = "Failed";
 		}
 		
-		System.out.println(message);
+		//System.out.println(message);
 		
 		return message;
 	}
