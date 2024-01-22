@@ -2,6 +2,7 @@ package com.lenstech.chamafullstackproject.controller;
 
 import com.lenstech.chamafullstackproject.dto.DepositForm;
 import com.lenstech.chamafullstackproject.dto.UserDto;
+import com.lenstech.chamafullstackproject.dto.WithdrawForm;
 import com.lenstech.chamafullstackproject.model.User;
 import com.lenstech.chamafullstackproject.service.UserService;
 
@@ -65,6 +66,7 @@ public class UserController {
     	long sub_amount = loggedInUser.getSub_amount();
     	
     	model.addAttribute("depositForm", new DepositForm());
+    	model.addAttribute("withdrawForm", new WithdrawForm());
     	model.addAttribute("user", loggedInUser);
     	model.addAttribute("username", username);
     	model.addAttribute("sub_amount", sub_amount);
@@ -81,6 +83,22 @@ public class UserController {
     	Long depositAmount = depositForm.getDepositAmount();
     	Long currentBalance = user.getBalance();
     	Long newBalance = currentBalance + depositAmount;
+    	
+    	user.setBalance(newBalance);
+    	
+    	userService.updateUser(user);
+    	return "redirect:/user/profile"; 
+    }
+    
+    @PostMapping("/withdraw")
+    public String withdraw(@ModelAttribute WithdrawForm withdrawForm, Principal principal) {
+    	String email = principal.getName();
+    	
+    	User user = userService.findUserByEmail(email);
+    	
+    	Long withdrawalAmount = withdrawForm.getWithdrawalAmount();
+    	Long currentBalance = user.getBalance();
+    	Long newBalance = currentBalance - withdrawalAmount;
     	
     	user.setBalance(newBalance);
     	
