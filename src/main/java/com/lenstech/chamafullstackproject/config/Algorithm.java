@@ -118,7 +118,7 @@ public class Algorithm {
 				status = "Fail";
 			}
 		}
-		
+				
 		return status;
 	}
 	
@@ -161,9 +161,7 @@ public class Algorithm {
 			
 			message = "Failed";
 		}
-		
-		//System.out.println(message);
-		
+				
 		return message;
 	}
 	
@@ -206,9 +204,7 @@ public class Algorithm {
 			
 			message = "Failed";
 		}
-		
-		//System.out.println(message);
-		
+				
 		return message;
 	}
 }

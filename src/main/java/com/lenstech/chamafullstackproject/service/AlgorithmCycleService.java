@@ -97,7 +97,6 @@ public class AlgorithmCycleService {
 		}
     	
     	int size = group1Members.size();
-    	System.out.println(size);
 		int group1SubAmount = 300;
     	
     	if(accountBalance >= (size * group1SubAmount)) {

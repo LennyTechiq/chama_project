@@ -209,8 +209,7 @@ public class AdminController {
 	
 	@RequestMapping("/group2/credit")
 	public String creditGroup2(Model model) {
-		String message = algorithm.creditGroup2();
-		
+		String message = algorithm.creditGroup2();		
 		List<UserDto> users = userService.findAllUsers();
 		
 		Accounts group1AccountBalance = accountsService.getAccounts("group1");
