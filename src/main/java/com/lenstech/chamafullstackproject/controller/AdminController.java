@@ -109,6 +109,7 @@ public class AdminController {
 	public String addToGroup1(@PathVariable("email") String email) {
 		User user = userService.findUserByEmail(email);
 		user.setGroup(M_Group.Group_1);
+		user.setSub_amount(300);
 		userRepository.save(user);
 		return "redirect:/admin/members";
 	}
@@ -117,6 +118,7 @@ public class AdminController {
 	public String addToGroup2(@PathVariable("email") String email) {
 		User user = userService.findUserByEmail(email);
 		user.setGroup(M_Group.Group_2);
+		user.setSub_amount(600);
 		userRepository.save(user);
 		return "redirect:/admin/members";
 	}

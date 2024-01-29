@@ -107,9 +107,6 @@
             <li class="nav-item">
                 <a class="nav-link" th:href="@{/admin/group-2}"></i> Group 2</a>
             </li>
-            <!--<li class="nav-item">
-                <a class="nav-link" th:href="@{/admin/cycle}"></i> Cycle</a>
-            </li>-->
             <li class="nav-item">
                 <a class="nav-link" th:href="@{/user/profile}"><i class="fas fa-user icon"></i></a>
             </li>
@@ -164,10 +161,11 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title"><i class="fas fa-users icon"></i> Members List</h5>
-                        <!--<p th:if="${users.empty}">No members available</p>-->
-                        <ul th:each="user : ${users}">
+                        <div th:if="${!users.empty}">
+							<ul th:each="user : ${users}">
                             <li th:text="${user.firstName} + '	' + ${user.lastName}">Member 1: John Doe</li>
                         </ul>
+						</div>
                         <a th:href="@{/admin/members}" class="btn btn-primary">View More Details</a>
                     </div>
                 </div>

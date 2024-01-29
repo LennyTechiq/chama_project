@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService {
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
         user.setState(State.Not_Cycled);
         user.setGroup(M_Group.NA);
-        user.setSub_amount(300);
+        //user.setSub_amount(300);
 
         Role role = roleRepository.findByName("USER");
         if(role == null){
