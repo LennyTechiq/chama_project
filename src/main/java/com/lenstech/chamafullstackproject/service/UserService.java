@@ -29,6 +29,4 @@ public interface UserService {
 	List<User> findAll();
 
 	List<User> findByActive(boolean b);
-
-	void addToGroup1(User user);
 }

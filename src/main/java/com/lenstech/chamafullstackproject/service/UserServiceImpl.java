@@ -164,11 +164,4 @@ public class UserServiceImpl implements UserService {
                 .map((user) -> mapToUserDto(user))
                 .collect(Collectors.toList());
 	}
-
-	@Override
-	public void addToGroup1(User userDto) {
-		User user = userRepository.findByEmail(userDto.getEmail());
-		user.setGroup(M_Group.Group_1);
-		userRepository.save(user);
-	}
 }

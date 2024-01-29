@@ -82,16 +82,27 @@ public class AlgorithmCycleService {
     public AlgorithmCycle group1Pay(Long id) {
     	Optional<AlgorithmCycle> member = algorithmCycleRepository.findById(id);
     	User user = userRepository.findByEmail(member.get().getMember());
-    	
+    	List<User> members = userRepository.findAll();
     	Accounts account = accountsRepository.findByName("group1");
     	AlgorithmCycle member1 = member.get();
+    	List<User> group1Members = new ArrayList<>();
     	
     	Long balance = user.getBalance();
     	Long accountBalance = account.getBalance();
     	
-    	if(accountBalance >= 1800) {
-    		Long updatedBalance = balance + 1800;
-        	accountBalance -= 1800;
+    	for(User usr : members) {
+			if(usr.getGroup().equals(M_Group.Group_1)) {
+				group1Members.add(usr);
+			}
+		}
+    	
+    	int size = group1Members.size();
+    	System.out.println(size);
+		int group1SubAmount = 300;
+    	
+    	if(accountBalance >= (size * group1SubAmount)) {
+    		Long updatedBalance = balance + (size * group1SubAmount);
+        	accountBalance -= (size * group1SubAmount);
         	user.setBalance(updatedBalance);
         	account.setBalance(accountBalance);
         	
@@ -108,21 +119,31 @@ public class AlgorithmCycleService {
     public AlgorithmCycle group2Pay(Long id) {
     	Optional<AlgorithmCycle> member = algorithmCycleRepository.findById(id);
     	User user = userRepository.findByEmail(member.get().getMember());
-    	
+    	List<User> members = userRepository.findAll();
     	Accounts account = accountsRepository.findByName("group2");
     	AlgorithmCycle member1 = member.get();
+    	List<User> group2Members = new ArrayList<>();
     	
     	Long balance = user.getBalance();
     	Long accountBalance = account.getBalance();
     	
-    	if(accountBalance >= 1800) {
-    		Long updatedBalance = balance + 1800;
-        	accountBalance -= 1800;
+    	for(User usr : members) {
+			if(usr.getGroup().equals(M_Group.Group_1)) {
+				group2Members.add(usr);
+			}
+		}
+    	
+    	int size = group2Members.size();
+		int group1SubAmount = 600;
+    	
+    	if(accountBalance >= (size * group1SubAmount)) {
+    		Long updatedBalance = balance + (size * group1SubAmount);
+        	accountBalance -= (size * group1SubAmount);
         	user.setBalance(updatedBalance);
         	account.setBalance(accountBalance);
         	
         	member.get().setState(CycleState.Benefitted);
-        	user.setSub_amount(600);
+        	user.setSub_amount(1200);
     	}
     	
     	accountsRepository.save(account);

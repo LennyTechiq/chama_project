@@ -134,9 +134,12 @@ public class Algorithm {
 			}
 		}
 		
+		int size = group1Members.size();
+		int group2SubAmount = 300;
+		
 		if(checkGroup1MembersBalance().equals("Success")) {
 			for(User user : group1Members) {
-				if(user.getGiven_amount() < 1800) {
+				if(user.getGiven_amount() < size * group2SubAmount) {
 						Long balance = user.getBalance() - user.getSub_amount();
 						Long given_amount = user.getGiven_amount() + user.getSub_amount();
 						Long accountBalance = account.getBalance();
@@ -176,9 +179,12 @@ public class Algorithm {
 			}
 		}
 		
+		int size = group2Members.size();
+		int group2SubAmount = 600;
+		
 		if(checkGroup2MembersBalance().equals("Success")) {
 			for(User user : group2Members) {
-				if(user.getGiven_amount() < 1800) {
+				if(user.getGiven_amount() < size * group2SubAmount) {
 						Long balance = user.getBalance() - user.getSub_amount();
 						Long given_amount = user.getGiven_amount() + user.getSub_amount();
 						Long accountBalance = account.getBalance();
