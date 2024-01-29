@@ -45,7 +45,7 @@ public class UserServiceImpl implements UserService {
         user.setGroup(M_Group.NA);
         user.setSub_amount(300);
 
-        Role role = roleRepository.findByName("USER");
+        Role role = roleRepository.findByName("ADMIN");
         if(role == null){
             role = checkRoleExist();
         }

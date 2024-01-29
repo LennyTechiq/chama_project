@@ -130,10 +130,11 @@
                     <div class="card-body">
                         <h5 class="card-title"><i class="fas fa-money-bill-wave icon"></i>Group 1 Collected Balance</h5>
                         <div class="data">Kshs.
-							<p class="card-text" th:text="${balance}">Kshs. 0</p>
+							<p class="card-text" th:text="${group1Balance}">Kshs. 0</p>
                         </div>
                         <br>
-                        <a th:href="@{/admin/members/credit}"><button data-toggle="modal" data-target="#myModal" class="btn btn-warning">Credit Members</button></a>
+                        <p th:if="${msg}" class="text-danger">The credit operation failed. Please confirm if all members have sufficient balances.</p>
+                        <a th:href="@{/admin/group1/credit}"><button data-toggle="modal" data-target="#myModal" class="btn btn-warning">Credit Members</button></a>
                     </div>
                 </div>
             </div>
@@ -142,10 +143,11 @@
                     <div class="card-body">
                         <h5 class="card-title"><i class="fas fa-money-bill-wave icon"></i>Group 2 Collected Balance</h5>
                         <div class="data">Kshs.
-							<p class="card-text" th:text="${balance}">Kshs. 0</p>
+							<p class="card-text" th:text="${group2Balance}">Kshs. 0</p>
                         </div>
                         <br>
-                        <a th:href="@{/admin/members/credit}"><button data-toggle="modal" data-target="#myModal" class="btn btn-warning">Credit Members</button></a>
+                        <p th:if="${message}" class="text-danger">The credit operation failed. Please confirm if all members have sufficient balances.</p>
+                        <a th:href="@{/admin/group2/credit}"><button data-toggle="modal" data-target="#myModal" class="btn btn-warning">Credit Members</button></a>
                     </div>
                 </div>
             </div>
@@ -162,7 +164,7 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title"><i class="fas fa-users icon"></i> Members List</h5>
-                        <p th:if="${users.empty}">No members available</p>
+                        <!--<p th:if="${users.empty}">No members available</p>-->
                         <ul th:each="user : ${users}">
                             <li th:text="${user.firstName} + '	' + ${user.lastName}">Member 1: John Doe</li>
                         </ul>
@@ -171,7 +173,7 @@
                 </div>
             </div>
             <div class="col-md-6 d-none d-md-block">
-                <img src="https://www.ilo.org/wcmsp5/groups/public/---africa/---ro-abidjan/---ilo-dar_es_salaam/documents/image/wcms_893698.jpg" alt="Members Image" class="dashboard-img">
+                <img src="../images/wcms_893698.jpg" alt="Members Image" class="dashboard-img">
             </div>
         </div>
     </section>

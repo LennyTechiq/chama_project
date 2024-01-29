@@ -134,7 +134,7 @@
                 <td th:text="${user.email}">johndoe@example.com</td>
                 <td th:text="${user.group}">Group 1</td>
                 <td>
-					<a th:href="@{../../{id}(id=${user.id})}"><button class="btn btn-primary">Set Group</button></a>
+					<a th:href="@{/admin/member/add-to-group/{id}(id=${user.id})}"><button class="btn btn-primary">Set Group</button></a>
                 </td>
             </tr>
         </tbody>

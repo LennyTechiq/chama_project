@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin | Members</title>
+    <title>Admin | Members | Add-To-Group</title>
     <!-- Link to Bootstrap CSS -->
     <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
     
@@ -23,31 +23,6 @@
         .navbar-dark .navbar-toggler-icon {
             background-color: transparent;
             color: #fff;
-        }
-
-        /* Main content styles */
-        .container {
-            background-color: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            border-radius: 5px;
-        }
-
-        section {
-            margin-bottom: 30px;
-            padding: 20px;
-            background-color: #fff;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-
-        .card {
-            background-color: #fff;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        .card-title {
-            color: #333;
         }
 
         /* Styling links in the navbar */
@@ -70,17 +45,6 @@
         .nav-item.active .nav-link:hover {
             background-color: #0056b3;
         }
-
-        /* Icon styles */
-        .icon {
-            font-size: 24px;
-            margin-right: 10px;
-        }
-        
-        .dashboard-img {
-            max-width: 100%; /* Allow images to shrink to fit the container */
-            max-height: 200px; /* Set a maximum height for the images */
-        }
     </style>
 </head>
 <body>
@@ -97,10 +61,10 @@
                 <a class="nav-link" th:href="@{/admin/dashboard}"></i> Dashboard</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/admin/members}"></i> Members</a>
+                <a class="nav-link active" th:href="@{/admin/members}"></i> Members</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link active" th:href="@{/admin/group-1}"></i> Group 1</a>
+                <a class="nav-link" th:href="@{/admin/group-1}"></i> Group 1</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" th:href="@{/admin/group-2}"></i> Group 2</a>
@@ -112,36 +76,22 @@
     </div>
 </nav>
 
-<!-- Main Content -->
-<div class="container mt-4">
-    <h1>Group 1</h1>
-    <br>
-    <a th:href="@{/admin/member/add-to-cycle1}"><button class="btn btn-success">Add to Cycle</button></a>
-    <a th:href="@{/admin/group-1-cycle}"><button class="btn btn-primary">View Cycle</button></a>
-    <br>
-    <br>
-	<p class="text-info">The figures in the brackets indicates the contribution amount.</p>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Username</th>
-                <th>Email</th>
-                <th>Balance</th>
-                <th>State</th>
-            </tr>
-        </thead>
-        <tbody>
-			<tr th:if="${users.empty}">
-				<td>No Members Available</td>
-			</tr>
-            <tr th:each="user : ${users}">
-                <td th:text="${user.firstName} + '	' + ${user.lastName}">John Doe</td>
-                <td th:text="${user.email}">johndoe@example.com</td>
-                <td th:text="${user.balance} + '(' + ${user.sub_amount} + ')'">0</td>
-                <td th:text="${user.state}">Added to Cycle</td>
-            </tr>
-        </tbody>
-    </table>
+<div class="mt-5 container" style="max-width: 600px;" >
+	<div class="card">
+	    <h1 class="card-header">Member Details</h1>
+	    <div class="card-body" th:object="${userDto}">
+	        <p class="card-text" th:text="'Username: ' + ${userDto.firstName} + ' ' + ${userDto.lastName}"></p>
+	        <p class="card-text" th:text="'Email: ' + ${userDto.email}"></p>
+	    </div>
+	</div>
+	
+	<div class="mt-3">
+	    <!-- Add To Group-1 Button -->
+	    <a th:href="@{/admin/member/add-to-group-1/{email}(email=${userDto.email})}" class="btn btn-primary">Add To Group-1</a>
+	
+	    <!-- Add To Group-2 Button -->
+	    <a th:href="@{/admin/member/add-to-group-2/{email}(email=${userDto.email})}" class="btn btn-secondary ml-2">Add To Group-2</a>
+	</div>
 </div>
 
 <script th:src="@{/webjars/jquery/3.0.0/jquery.min.js}"></script>

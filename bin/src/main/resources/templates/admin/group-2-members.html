@@ -120,12 +120,13 @@
     <a th:href="@{/admin/group-2-cycle}"><button class="btn btn-primary">View Cycle</button></a>
     <br>
     <br>
+    <p class="text-info">The figures in the brackets indicates the contribution amount.</p>
     <table class="table table-striped">
         <thead>
             <tr>
-				<th>Id</th>
                 <th>Username</th>
                 <th>Email</th>
+                <th>Balance</th>
                 <th>State</th>
             </tr>
         </thead>
@@ -134,9 +135,9 @@
 				<td>No Members Available</td>
 			</tr>
             <tr th:each="user : ${users}">
-				<td th:text="${user.id}">1</td>
                 <td th:text="${user.firstName} + '	' + ${user.lastName}">John Doe</td>
                 <td th:text="${user.email}">johndoe@example.com</td>
+                <td th:text="${user.balance} + '(' + ${user.sub_amount} + ')'">0</td>
                 <td th:text="${user.state}">Added to Cycle</td>
             </tr>
         </tbody>
