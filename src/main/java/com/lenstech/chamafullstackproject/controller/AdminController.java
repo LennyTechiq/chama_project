@@ -106,21 +106,45 @@ public class AdminController {
 	}
 	
 	@RequestMapping("/member/add-to-group-1/{email}")
-	public String addToGroup1(@PathVariable("email") String email) {
+	public String addToGroup1(@PathVariable("email") String email, Model model) {
+		List<UserDto> users = userService.findAllUsers();
 		User user = userService.findUserByEmail(email);
-		user.setGroup(M_Group.Group_1);
-		user.setSub_amount(300);
-		userRepository.save(user);
-		return "redirect:/admin/members";
+		String message1 = null;
+		String username = user.getUsername();
+		
+		if(user.getBalance() >= 900) {
+			user.setGroup(M_Group.Group_1);
+			user.setSub_amount(300);
+			userRepository.save(user);
+		} else {
+			message1 = "Fail";
+		}
+		
+		model.addAttribute("username", username);
+		model.addAttribute("users", users);
+		model.addAttribute("message1", message1);
+		return "admin/members";
 	}
 	
 	@RequestMapping("/member/add-to-group-2/{email}")
-	public String addToGroup2(@PathVariable("email") String email) {
+	public String addToGroup2(@PathVariable("email") String email, Model model) {
+		List<UserDto> users = userService.findAllUsers();
 		User user = userService.findUserByEmail(email);
-		user.setGroup(M_Group.Group_2);
-		user.setSub_amount(600);
-		userRepository.save(user);
-		return "redirect:/admin/members";
+		String message2 = null;
+		String username = user.getUsername();
+		
+		if(user.getBalance() >= 1800) {
+			user.setGroup(M_Group.Group_2);
+			user.setSub_amount(600);
+			userRepository.save(user);
+		} else {
+			message2 = "Fail";
+		}
+		
+		model.addAttribute("username", username);
+		model.addAttribute("users", users);
+		model.addAttribute("message2", message2);
+		return "admin/members";
 	}
 	
 	@GetMapping("/member/add-to-cycle2")
