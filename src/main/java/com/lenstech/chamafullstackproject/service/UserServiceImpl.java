@@ -164,4 +164,11 @@ public class UserServiceImpl implements UserService {
                 .map((user) -> mapToUserDto(user))
                 .collect(Collectors.toList());
 	}
+
+	@Override
+	public void removeMember(Long id) {
+		User user = userRepository.findById(id).orElse(null);
+		user.setGroup(M_Group.NA);
+		userRepository.save(user);
+	}
 }

@@ -69,15 +69,16 @@ public class AlgorithmCycleService {
     	algorithmCycleRepository.save(cycleData);
     }
     
-    public void removeMember(Long id) {
+    /**public void removeMember(Long id) {
     	Optional<AlgorithmCycle> member = algorithmCycleRepository.findById(id);
     	User user = userRepository.findByEmail(member.get().getMember());
     	
     	user.setState(State.Not_Cycled);
+    	//user.setSub_amount(300);
     	
     	userRepository.save(user);
     	algorithmCycleRepository.deleteById(id);
-    }
+    }**/
     
     public AlgorithmCycle group1Pay(Long id) {
     	Optional<AlgorithmCycle> member = algorithmCycleRepository.findById(id);

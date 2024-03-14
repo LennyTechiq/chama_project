@@ -7,10 +7,12 @@ import java.util.Random;
 import org.springframework.stereotype.Component;
 
 import com.lenstech.chamafullstackproject.model.Accounts;
+import com.lenstech.chamafullstackproject.model.CycleCount;
 import com.lenstech.chamafullstackproject.model.M_Group;
 import com.lenstech.chamafullstackproject.model.State;
 import com.lenstech.chamafullstackproject.model.User;
 import com.lenstech.chamafullstackproject.repository.AccountsRepository;
+import com.lenstech.chamafullstackproject.repository.CycleRepository;
 import com.lenstech.chamafullstackproject.repository.UserRepository;
 
 @Component
@@ -18,30 +20,12 @@ public class Algorithm {
 	
 	private UserRepository userRepository;
 	private AccountsRepository accountsRepository;
+	//private CycleRepository cycleRepository;
 	
-	public Algorithm(UserRepository userRepository, AccountsRepository accountsRepository) {
+	public Algorithm(UserRepository userRepository, AccountsRepository accountsRepository, CycleRepository cycleRepository) {
 		this.userRepository = userRepository;
 		this.accountsRepository = accountsRepository;
-	}
-	
-	public User cycle2Randomizer() {
-		List<User> members = userRepository.findByState(State.Not_Cycled);
-		List<User> toCycle1List = new ArrayList<>();
-		
-		for(User member : members) {
-			if(member.getGroup().equals(M_Group.Group_2)) {
-				toCycle1List.add(member);
-			}
-		}
-		
-		Random rand = new Random();
-		User user = null;
-
-		if(!toCycle1List.isEmpty()) {
-			user = toCycle1List.get(rand.nextInt(toCycle1List.size()));
-		}
-		
-		return user;
+		//this.cycleRepository = cycleRepository;
 	}
 	
 	public User cycle1Randomizer() {
@@ -64,62 +48,24 @@ public class Algorithm {
 		return user;
 	}
 	
-	public String checkGroup1MembersBalance() {
-		List<User> members = userRepository.findAll();
-		String status = "Success";
-		List<User> group1Members = new ArrayList<>();
+	public User cycle2Randomizer() {
+		List<User> members = userRepository.findByState(State.Not_Cycled);
+		List<User> toCycle1List = new ArrayList<>();
 		
-		for(User user : members) {
-			if(user.getGroup().equals(M_Group.Group_1)) {
-				group1Members.add(user);
+		for(User member : members) {
+			if(member.getGroup().equals(M_Group.Group_2)) {
+				toCycle1List.add(member);
 			}
 		}
 		
-		for(User user : group1Members) {
-			user.setActive(false);
-			userRepository.save(user);
+		Random rand = new Random();
+		User user = null;
+
+		if(!toCycle1List.isEmpty()) {
+			user = toCycle1List.get(rand.nextInt(toCycle1List.size()));
 		}
 		
-		for(User user : group1Members) {
-			if(user.getBalance() >= user.getSub_amount()) {
-				user.setActive(true);
-				userRepository.save(user);
-			}
-			else {
-				status = "Fail";
-			}
-		}
-				
-		return status;
-	}
-	
-	public String checkGroup2MembersBalance() {
-		List<User> members = userRepository.findAll();
-		String status = "Success";
-		List<User> group2Members = new ArrayList<>();
-		
-		for(User user : members) {
-			if(user.getGroup().equals(M_Group.Group_2)) {
-				group2Members.add(user);
-			}
-		}
-		
-		for(User user : group2Members) {
-			user.setActive(false);
-			userRepository.save(user);
-		}
-		
-		for(User user : group2Members) {
-			if(user.getBalance() >= user.getSub_amount()) {
-				user.setActive(true);
-				userRepository.save(user);
-			}
-			else {
-				status = "Fail";
-			}
-		}
-				
-		return status;
+		return user;
 	}
 	
 	public String creditGroup1() {
@@ -135,14 +81,15 @@ public class Algorithm {
 		}
 		
 		int size = group1Members.size();
-		int group2SubAmount = 300;
+		int group1SubAmount = 300;
 		
 		if(checkGroup1MembersBalance().equals("Success")) {
 			for(User user : group1Members) {
-				if(user.getGiven_amount() < size * group2SubAmount) {
+				if(user.getGiven_amount() < size * group1SubAmount) {
 						Long balance = user.getBalance() - user.getSub_amount();
 						Long given_amount = user.getGiven_amount() + user.getSub_amount();
 						Long accountBalance = account.getBalance();
+						//CycleCount cycleCount = cycleRepository.findByGroupName("group1");
 						
 						user.setBalance(balance);
 						user.setGiven_amount(given_amount);
@@ -150,6 +97,11 @@ public class Algorithm {
 						accountBalance += user.getSub_amount();
 						account.setBalance(accountBalance);
 						
+						/**Long count = cycleCount.getCount();
+						System.out.println(count);
+						cycleCount.setCount(count++);**/
+						
+						//cycleRepository.save(cycleCount);
 						userRepository.save(user);
 						accountsRepository.save(account);
 				} 
@@ -186,6 +138,7 @@ public class Algorithm {
 						Long balance = user.getBalance() - user.getSub_amount();
 						Long given_amount = user.getGiven_amount() + user.getSub_amount();
 						Long accountBalance = account.getBalance();
+						//
 						
 						user.setBalance(balance);
 						user.setGiven_amount(given_amount);
@@ -193,8 +146,12 @@ public class Algorithm {
 						accountBalance += user.getSub_amount();
 						account.setBalance(accountBalance);
 						
+						/**Long count = cycleCount.getCount();
+						cycleCount.setCount(count++);**/
+						
 						userRepository.save(user);
 						accountsRepository.save(account);
+						//cycleRepository.save(cycleCount);
 				} 
 			} 
 			
@@ -206,5 +163,69 @@ public class Algorithm {
 		}
 				
 		return message;
+	}
+	
+	public String checkGroup1MembersBalance() {
+		List<User> members = userRepository.findAll();
+		String status = "Success";
+		List<User> group1Members = new ArrayList<>();
+		
+		for(User user : members) {
+			if(user.getGroup().equals(M_Group.Group_1)) {
+				group1Members.add(user);
+			}
+		}
+		
+		for(User user : group1Members) {
+			user.setActive(false);
+			userRepository.save(user);
+		}
+		
+		for(User user : group1Members) {
+			if(user.getBalance() >= user.getSub_amount()) {
+				user.setActive(true);
+				userRepository.save(user);
+			}
+			else {
+				Long bal = user.getBalance() - 30;
+				user.setBalance(bal);
+				userRepository.save(user);
+				status = "Fail";
+			}
+		}
+				
+		return status;
+	}
+	
+	public String checkGroup2MembersBalance() {
+		List<User> members = userRepository.findAll();
+		String status = "Success";
+		List<User> group2Members = new ArrayList<>();
+		
+		for(User user : members) {
+			if(user.getGroup().equals(M_Group.Group_2)) {
+				group2Members.add(user);
+			}
+		}
+		
+		for(User user : group2Members) {
+			user.setActive(false);
+			userRepository.save(user);
+		}
+		
+		for(User user : group2Members) {
+			if(user.getBalance() >= user.getSub_amount()) {
+				user.setActive(true);
+				userRepository.save(user);
+			}
+			else {
+				Long bal = user.getBalance() - 60;
+				user.setBalance(bal);
+				userRepository.save(user);
+				status = "Fail";
+			}
+		}
+				
+		return status;
 	}
 }

@@ -29,4 +29,6 @@ public interface UserService {
 	List<User> findAll();
 
 	List<User> findByActive(boolean b);
+
+	void removeMember(Long id);
 }

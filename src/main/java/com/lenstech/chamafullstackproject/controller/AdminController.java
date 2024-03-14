@@ -14,8 +14,10 @@ import com.lenstech.chamafullstackproject.config.Algorithm;
 import com.lenstech.chamafullstackproject.dto.UserDto;
 import com.lenstech.chamafullstackproject.model.Accounts;
 import com.lenstech.chamafullstackproject.model.AlgorithmCycle;
+import com.lenstech.chamafullstackproject.model.CycleCount;
 import com.lenstech.chamafullstackproject.model.M_Group;
 import com.lenstech.chamafullstackproject.model.User;
+import com.lenstech.chamafullstackproject.repository.CycleRepository;
 import com.lenstech.chamafullstackproject.repository.UserRepository;
 import com.lenstech.chamafullstackproject.service.AccountsService;
 import com.lenstech.chamafullstackproject.service.AlgorithmCycleService;
@@ -29,18 +31,21 @@ public class AdminController {
 	private AlgorithmCycleService algorithmCycleService;
 	private AccountsService accountsService;
 	private UserRepository userRepository;
+	private CycleRepository cycleRepository;
 	
 	public AdminController(
 			UserService userService, 
 			Algorithm algorithm,
 			AlgorithmCycleService algorithmCycleService,
 			AccountsService accountsService,
-			UserRepository userRepository) {
+			UserRepository userRepository,
+			CycleRepository cycleRepository) {
 		this.userService = userService;
 		this.algorithm = algorithm;
 		this.algorithmCycleService = algorithmCycleService;
 		this.accountsService = accountsService;
 		this.userRepository = userRepository;
+		this.cycleRepository = cycleRepository;
 	}
 
 	@GetMapping("/dashboard")
@@ -189,16 +194,16 @@ public class AdminController {
 		return "admin/group-2-cycle";
 	}
 	
-	@RequestMapping("/group-1-cycle/remove/{id}")
-	public String removeFromGroup1Cycle(@PathVariable("id") Long id) {
-		algorithmCycleService.removeMember(id);
-		return "redirect:/admin/group-1-cycle";
+	@RequestMapping("/group-1/remove/{id}")
+	public String removeFromGroup1(@PathVariable("id") Long id) {
+		userService.removeMember(id);
+		return "redirect:/admin/group-1";
 	}
 	
-	@RequestMapping("/group-2-cycle/remove/{id}")
-	public String removeFromGroup2Cycle(@PathVariable("id") Long id) {
-		algorithmCycleService.removeMember(id);
-		return "redirect:/admin/group-2-cycle";
+	@RequestMapping("/group-2/remove/{id}")
+	public String removeFromGroup2(@PathVariable("id") Long id) {
+		userService.removeMember(id);
+		return "redirect:/admin/group-2";
 	}
 	
 	@RequestMapping("/group-1-cycle/pay/{id}")
@@ -216,7 +221,12 @@ public class AdminController {
 	@RequestMapping("/group1/credit")
 	public String creditGroup1(Model model) {
 		String msg = algorithm.creditGroup1();
-		
+		if (msg == null) {
+			CycleCount cycleCount = cycleRepository.findByGroupName("group1");
+			Long count = cycleCount.getCount();
+			cycleCount.setCount(count++);
+			cycleRepository.save(cycleCount);
+		}
 		List<UserDto> users = userService.findAllUsers();
 		
 		Accounts group1AccountBalance = accountsService.getAccounts("group1");
