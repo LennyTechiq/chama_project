@@ -6,6 +6,7 @@ import java.util.Random;
 
 import org.springframework.stereotype.Component;
 
+import com.lenstech.chamafullstackproject.dto.UserDto;
 import com.lenstech.chamafullstackproject.model.Accounts;
 import com.lenstech.chamafullstackproject.model.CycleCount;
 import com.lenstech.chamafullstackproject.model.M_Group;
@@ -20,12 +21,12 @@ public class Algorithm {
 	
 	private UserRepository userRepository;
 	private AccountsRepository accountsRepository;
-	//private CycleRepository cycleRepository;
+	private CycleRepository cycleRepository;
 	
 	public Algorithm(UserRepository userRepository, AccountsRepository accountsRepository, CycleRepository cycleRepository) {
 		this.userRepository = userRepository;
 		this.accountsRepository = accountsRepository;
-		//this.cycleRepository = cycleRepository;
+		this.cycleRepository = cycleRepository;
 	}
 	
 	public User cycle1Randomizer() {
@@ -227,5 +228,24 @@ public class Algorithm {
 		}
 				
 		return status;
+	}
+	
+	public String checkNewMemberGroup1(String group, String email) {
+		String message1 = null;
+		
+		User user = userRepository.findByEmail(email);
+		CycleCount cycleCount = cycleRepository.findByGroupName(group);
+		
+		Long count = cycleCount.getCount();
+		
+		if(user.getBalance() >= (900 + count*300)) {
+			user.setGroup(M_Group.Group_1);
+			user.setSub_amount(300);
+			userRepository.save(user);
+		} else {
+			message1 = "Fail";
+		}
+		
+		return message1;
 	}
 }

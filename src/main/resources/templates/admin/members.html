@@ -116,8 +116,8 @@
 <div class="container mt-4">
     <h1>All Members</h1>
     <br>
-	<p th:if="${message1}" class="text-danger" th:utext="'<b>' + ${username} + '</b> has insufficient balance to be added to <b>Group 1</b>. The least amount should be <b>Ksh.900</b>'"></p>
-	<p th:if="${message2}" class="text-danger" th:utext="'<b>' + ${username} + '</b> has insufficient balance to be added to <b>Group 2</b>. The least amount should be <b>Ksh.1800</b>'"></p>
+	<p th:if="${message1}" class="text-danger" th:utext="'<b>' + ${username} + '</b> has insufficient balance to be added to <b>Group 1</b>. The least amount should be <b>Ksh.900</b> + any other required amount.'"></p>
+	<p th:if="${message2}" class="text-danger" th:utext="'<b>' + ${username} + '</b> has insufficient balance to be added to <b>Group 2</b>. The least amount should be <b>Ksh.1800</b> + any other required amount.'"></p>
     <table class="table table-striped">
         <thead>
             <tr>

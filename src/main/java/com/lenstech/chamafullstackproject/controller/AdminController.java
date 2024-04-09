@@ -114,16 +114,19 @@ public class AdminController {
 	public String addToGroup1(@PathVariable("email") String email, Model model) {
 		List<UserDto> users = userService.findAllUsers();
 		User user = userService.findUserByEmail(email);
-		String message1 = null;
+		//CycleCount cycleCount = cycleRepository.findByGroupName("group1");
+		String message1 = algorithm.checkNewMemberGroup1(email, "group1");
 		String username = user.getUsername();
 		
-		if(user.getBalance() >= 900) {
-			user.setGroup(M_Group.Group_1);
-			user.setSub_amount(300);
-			userRepository.save(user);
-		} else {
-			message1 = "Fail";
-		}
+		//Long count = cycleCount.getCount();
+		
+		//if(user.getBalance() >= (900 + count*300)) {
+		//	user.setGroup(M_Group.Group_1);
+		//	user.setSub_amount(300);
+		//	userRepository.save(user);
+		//} else {
+		//	message1 = "Fail";
+		//}
 		
 		model.addAttribute("username", username);
 		model.addAttribute("users", users);
@@ -135,16 +138,19 @@ public class AdminController {
 	public String addToGroup2(@PathVariable("email") String email, Model model) {
 		List<UserDto> users = userService.findAllUsers();
 		User user = userService.findUserByEmail(email);
-		String message2 = null;
+		//CycleCount cycleCount = cycleRepository.findByGroupName("group1");
+		String message2 = algorithm.checkNewMemberGroup1(email, "group2");
 		String username = user.getUsername();
 		
-		if(user.getBalance() >= 1800) {
-			user.setGroup(M_Group.Group_2);
-			user.setSub_amount(600);
-			userRepository.save(user);
-		} else {
-			message2 = "Fail";
-		}
+		//Long count = cycleCount.getCount();
+		
+		//if(user.getBalance() >= (1800 + count*600)) {
+		//	user.setGroup(M_Group.Group_2);
+		//	user.setSub_amount(600);
+		//	userRepository.save(user);
+		//} else {
+		//	message2 = "Fail";
+		//}
 		
 		model.addAttribute("username", username);
 		model.addAttribute("users", users);
@@ -221,13 +227,14 @@ public class AdminController {
 	@RequestMapping("/group1/credit")
 	public String creditGroup1(Model model) {
 		String msg = algorithm.creditGroup1();
-		if (msg == null) {
-			CycleCount cycleCount = cycleRepository.findByGroupName("group1");
-			Long count = cycleCount.getCount();
-			cycleCount.setCount(count++);
-			cycleRepository.save(cycleCount);
-		}
+		CycleCount cycleCount = cycleRepository.findByGroupName("group1");
 		List<UserDto> users = userService.findAllUsers();
+		
+		if (msg == null) {
+					Long count = cycleCount.getCount();
+					cycleCount.setCount(++count);
+					cycleRepository.save(cycleCount);
+		}
 		
 		Accounts group1AccountBalance = accountsService.getAccounts("group1");
 		Accounts group2AccountBalance = accountsService.getAccounts("group2");
@@ -245,6 +252,13 @@ public class AdminController {
 	public String creditGroup2(Model model) {
 		String message = algorithm.creditGroup2();		
 		List<UserDto> users = userService.findAllUsers();
+		CycleCount cycleCount = cycleRepository.findByGroupName("group2");
+		
+		if (message == null) {
+			Long count = cycleCount.getCount();
+			cycleCount.setCount(++count);
+			cycleRepository.save(cycleCount);
+		}
 		
 		Accounts group1AccountBalance = accountsService.getAccounts("group1");
 		Accounts group2AccountBalance = accountsService.getAccounts("group2");
