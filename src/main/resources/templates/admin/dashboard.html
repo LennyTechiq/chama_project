@@ -162,11 +162,17 @@
                     <div class="card-body">
                         <h5 class="card-title"><i class="fas fa-users icon"></i> Members List</h5>
                         <div th:if="${!users.empty}">
-							<ul th:each="user : ${users}">
-                            <li th:text="${user.firstName} + '	' + ${user.lastName}">Member 1: John Doe</li>
-                        </ul>
+							<ul>
+	                            <!-- Use th:block to contain the conditional expression -->
+	                            <th:block th:each="user, iterStat : ${users}">
+	                                <!-- Display only the first three members -->
+	                                <li th:if="${iterStat.index < 3}">
+	                                    <span th:text="${user.firstName + ' ' + user.lastName}">Member 1: John Doe</span>
+	                                </li>
+	                            </th:block>
+	                        </ul>
 						</div>
-                        <a th:href="@{/admin/members}" class="btn btn-primary">View More Details</a>
+                        <a th:href="@{/admin/members}" class="btn btn-primary">View More Members</a>
                     </div>
                 </div>
             </div>
