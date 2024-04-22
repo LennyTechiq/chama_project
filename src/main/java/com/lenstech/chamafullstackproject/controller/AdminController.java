@@ -114,19 +114,21 @@ public class AdminController {
 	public String addToGroup1(@PathVariable("email") String email, Model model) {
 		List<UserDto> users = userService.findAllUsers();
 		User user = userService.findUserByEmail(email);
-		//CycleCount cycleCount = cycleRepository.findByGroupName("group1");
+		CycleCount cycleCount = cycleRepository.findByGroupName("group1");
 		String message1 = algorithm.checkNewMemberGroup1(email, "group1");
 		String username = user.getUsername();
 		
-		//Long count = cycleCount.getCount();
-		
-		//if(user.getBalance() >= (900 + count*300)) {
-		//	user.setGroup(M_Group.Group_1);
-		//	user.setSub_amount(300);
-		//	userRepository.save(user);
-		//} else {
-		//	message1 = "Fail";
-		//}
+		if (cycleCount != null) {
+			Long count = cycleCount.getCount();
+			
+			if(user.getBalance() >= (900 + count*300)) {
+				user.setGroup(M_Group.Group_1);
+				user.setSub_amount(300);
+				userRepository.save(user);
+			} else {
+				message1 = "Fail";
+			}
+		}
 		
 		model.addAttribute("username", username);
 		model.addAttribute("users", users);
@@ -138,19 +140,21 @@ public class AdminController {
 	public String addToGroup2(@PathVariable("email") String email, Model model) {
 		List<UserDto> users = userService.findAllUsers();
 		User user = userService.findUserByEmail(email);
-		//CycleCount cycleCount = cycleRepository.findByGroupName("group1");
-		String message2 = algorithm.checkNewMemberGroup1(email, "group2");
+		CycleCount cycleCount = cycleRepository.findByGroupName("group2");
+		String message2 = algorithm.checkNewMemberGroup2(email, "group2");
 		String username = user.getUsername();
 		
-		//Long count = cycleCount.getCount();
-		
-		//if(user.getBalance() >= (1800 + count*600)) {
-		//	user.setGroup(M_Group.Group_2);
-		//	user.setSub_amount(600);
-		//	userRepository.save(user);
-		//} else {
-		//	message2 = "Fail";
-		//}
+		if (cycleCount != null) {
+			Long count = cycleCount.getCount();
+			
+			if(user.getBalance() >= (1800 + count*600)) {
+				user.setGroup(M_Group.Group_2);
+				user.setSub_amount(600);
+				userRepository.save(user);
+			} else {
+				message2 = "Fail";
+			}
+		}
 		
 		model.addAttribute("username", username);
 		model.addAttribute("users", users);

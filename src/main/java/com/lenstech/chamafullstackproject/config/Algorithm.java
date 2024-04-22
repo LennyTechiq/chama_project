@@ -245,14 +245,38 @@ public class Algorithm {
         User user = userRepository.findByEmail(email);
         CycleCount cycleCount = cycleRepository.findByGroupName(group);
         
-        Long count = cycleCount.getCount();
+        if(cycleCount != null) {
+        	Long count = cycleCount.getCount();
+            
+            if(user.getBalance() >= (900 + count*300)) {
+                user.setGroup(M_Group.Group_1);
+                user.setSub_amount(300);
+                userRepository.save(user);
+            } else {
+                message1 = "Fail";
+            }
+        }
         
-        if(user.getBalance() >= (900 + count*300)) {
-            user.setGroup(M_Group.Group_1);
-            user.setSub_amount(300);
-            userRepository.save(user);
-        } else {
-            message1 = "Fail";
+        return message1;
+    }
+    
+ // Check the eligibility of a new member to join Group 2 based on their balance
+    public String checkNewMemberGroup2(String group, String email) {
+        String message1 = null;
+        
+        User user = userRepository.findByEmail(email);
+        CycleCount cycleCount = cycleRepository.findByGroupName(group);
+        
+        if(cycleCount != null) {
+        	Long count = cycleCount.getCount();
+            
+            if(user.getBalance() >= (1800 + count*600)) {
+                user.setGroup(M_Group.Group_2);
+                user.setSub_amount(600);
+                userRepository.save(user);
+            } else {
+                message1 = "Fail";
+            }
         }
         
         return message1;
