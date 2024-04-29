@@ -22,16 +22,16 @@ public class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
     private RoleRepository roleRepository;
-    private PasswordEncoder passwordEncoder;
+    //private PasswordEncoder passwordEncoder;
     private AlgorithmCycleService algorithmCycleService;
 
     public UserServiceImpl(UserRepository userRepository,
                            RoleRepository roleRepository,
-                           PasswordEncoder passwordEncoder,
+                           //PasswordEncoder passwordEncoder,
                            AlgorithmCycleService algorithmCycleService) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
-        this.passwordEncoder = passwordEncoder;
+        //this.passwordEncoder = passwordEncoder;
         this.algorithmCycleService = algorithmCycleService;
     }
 
@@ -40,7 +40,8 @@ public class UserServiceImpl implements UserService {
         User user = new User();
         user.setUsername(userDto.getFirstName() + " " + userDto.getLastName());
         user.setEmail(userDto.getEmail());
-        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+        //user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+        user.setPassword(userDto.getPassword());
         user.setState(State.Not_Cycled);
         user.setGroup(M_Group.NA);
         //user.setSub_amount(300);
